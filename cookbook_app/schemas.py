@@ -2,10 +2,10 @@ from pydantic import BaseModel
 
 
 class BaseRecipe(BaseModel):
-    title: str 
-    count_of_view: int 
-    time_cook: int 
-    list_of_ingredients: str 
+    title: str
+    count_of_view: int
+    time_cook: int
+    list_of_ingredients: str
     description: str
 
 
