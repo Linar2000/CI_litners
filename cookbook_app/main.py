@@ -41,7 +41,9 @@ async def get_all_recipe() -> List[models.RecipeModel]:
     :return: list of objects
     """
     res = await session.execute(
-        select(models.RecipeModel).order_by(models.RecipeModel.count_of_view.desc())
+        select(
+            models.RecipeModel)
+            .order_by(models.RecipeModel.count_of_view.desc())
     )
     return res.scalars().all()
 
