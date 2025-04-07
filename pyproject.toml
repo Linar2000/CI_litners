@@ -1,6 +1,3 @@
 [tool.black]
 line-length = 88
 target-version = ["py311"]
-per-file-ignores = 
-    cookbook_app/database.py: E501
-    cookbook_app/main.py: E501
