@@ -10,19 +10,19 @@ from database import engine, session
 app = FastAPI()
 
 
-@app.on_event('startup')
+@app.on_event("startup")
 async def startup():
     async with engine.begin() as conn:
         await conn.run_sync(models.Base.metadata.create_all)
 
 
-@app.on_event('shutdown')
+@app.on_event("shutdown")
 async def shutdown():
     await session.close()
     await engine.dispose()
 
 
-@app.post('/recipe/', response_model=schemas.RecipeOut)
+@app.post("/recipe/", response_model=schemas.RecipeOut)
 async def create_recipe(recipe: schemas.RecipeIn) -> models.RecipeModel:
     """
     post-endpoint for recipe objects create
@@ -34,20 +34,19 @@ async def create_recipe(recipe: schemas.RecipeIn) -> models.RecipeModel:
     return new_recipe
 
 
-@app.get('/recipe/', response_model=List[schemas.PrewRecipe])
+@app.get("/recipe/", response_model=List[schemas.PrewRecipe])
 async def get_all_recipe() -> List[models.RecipeModel]:
     """
     get-endpoint for get all recipes objects
     :return: list of objects
     """
     res = await session.execute(
-        select(models.RecipeModel).
-        order_by(models.RecipeModel.count_of_view.desc())
-        )
+        select(models.RecipeModel).order_by(models.RecipeModel.count_of_view.desc())
+    )
     return res.scalars().all()
 
 
-@app.get('/recipe/{idx}/', response_model=List[schemas.RecipeOut])
+@app.get("/recipe/{idx}/", response_model=List[schemas.RecipeOut])
 async def get_recipe_by_id(idx: int) -> List[models.RecipeModel]:
     """
     get-endpoint for get recipe objects by id
@@ -55,9 +54,8 @@ async def get_recipe_by_id(idx: int) -> List[models.RecipeModel]:
     :return: json
     """
     res = await session.execute(
-        select(models.RecipeModel).
-        where(models.RecipeModel.id == idx)
-        )
+        select(models.RecipeModel).where(models.RecipeModel.id == idx)
+    )
     recipe = res.scalars().all()
     print(recipe[0])
     recipe[0].count_of_view += 1
