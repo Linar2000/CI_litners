@@ -1,11 +1,10 @@
-from fastapi import FastAPI
-from sqlalchemy.future import select
-
 from typing import List
 
 import models
 import schemas
 from database import engine, session
+from fastapi import FastAPI
+from sqlalchemy.future import select
 
 app = FastAPI()
 
