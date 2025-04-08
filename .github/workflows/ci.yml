@@ -15,6 +15,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: Run flake8
-      run: flake8 .
+      run: flake8  --config=.flake8.ini .
     - name: Run black
       run: black --check .
